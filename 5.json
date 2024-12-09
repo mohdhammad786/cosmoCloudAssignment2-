@@ -1,0 +1,46 @@
+[
+  {
+    "$match": {
+      "released": { 
+        "$lt": new ISODate("1950-01-01T00:00:00Z")
+      },
+      "imdb.rating": { "$gte": 7 } 
+    }
+  },
+  {
+    "$lookup": {
+      "from": "comments",
+      "localField": "_id",
+      "foreignField": "movie_id",
+      "as": "comments"
+    }
+  },
+  {
+    "$project": {
+      "title": 1,
+      "imdbRating": "$imdb.rating",
+      "comments": { "$slice": ["$comments", 2] },
+      "_id": 0,
+      "releaseYear": { "$year": "$released" }, 
+      "genres": 1
+    }
+  },
+  {
+    "$project": {
+      "title": 1,
+      "imdbRating": 1,
+      "releaseYear": 1,
+      "genres": 1,
+      "comments": {
+        "$map": {
+          "input": "$comments", 
+          "as": "comment",
+          "in": {
+            "name": "$$comment.name",  
+            "text": "$$comment.text" 
+          }
+        }
+      }
+    }
+  }
+]
