@@ -10,17 +10,10 @@
   {
     "$project": {
       "title":1,
-      "comments":1,
-      "_id":0
-    }
-  },
-  {
-    "$project": {
-      "title":1,
       "comments.name":1,
       "comments.email":1,
       "comments.text":1,
       "comments.date":1,
+      "_id":0
     }
-  }
-]
+  }]
