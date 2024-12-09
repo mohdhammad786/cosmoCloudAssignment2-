@@ -10,16 +10,10 @@
   {
     "$project": {
       "title":1,
-      "comments":1,
-      "_id":0
-    }
-  },
-  {
-    "$project": {
-      "title":1,
-      "commentsCount": {  
+      "_id":0,
+       "commentCount": {  
         "$size": "$comments"
       }
     }
-  }
+  },
 ]
